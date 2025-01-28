@@ -49,6 +49,16 @@ builder.Services.AddAuthentication(config =>
     };
 });
 
+//----------------------------------------
+//Configuaracion de CORS
+//----------------------------------------
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("NewPolicy", app => {
+        app.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -60,8 +70,10 @@ if (app.Environment.IsDevelopment())
 
 //----------------------------------------
 //Indica que la API requiere
-//de autenticacion
+//de autenticacion y implementa los
+//servicios del CORS
 //----------------------------------------
+app.UseCors("NewPolicy");
 app.UseAuthentication();
 
 app.UseAuthorization();
