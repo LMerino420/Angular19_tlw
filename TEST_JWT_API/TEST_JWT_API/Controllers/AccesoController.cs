@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
@@ -14,11 +13,14 @@ namespace TEST_JWT_API.Controllers
     [ApiController]
     public class AccesoController : ControllerBase
     {
+        private readonly ILogger<AccesoController> _logger;
         //Variables para gestion de acceso
         private readonly DbTestContext _dbTestContext;
         private readonly Utilidades _utilidades;
-        public AccesoController(DbTestContext dbTestContext,Utilidades utilidades)
+        public AccesoController(ILogger<AccesoController> logger,DbTestContext dbTestContext,Utilidades utilidades)
         {
+            _logger = logger;
+
             _dbTestContext = dbTestContext;
             _utilidades = utilidades;
         }
