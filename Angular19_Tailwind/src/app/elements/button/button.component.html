@@ -1,0 +1,14 @@
+<button
+  [ngClass]="getButtonClasses()"
+  class="group"
+  [disabled]="disabled"
+  [type]="type"
+>
+  <ng-container *ngIf="icon && iconPosition === 'left'">
+    <app-svg-icon [path]="icon" [additionalClasses]="getIconClasses()" />
+  </ng-container>
+  {{ label }}
+  <ng-container *ngIf="icon && iconPosition === 'right'">
+    <app-svg-icon [path]="icon" [additionalClasses]="getIconClasses()" />
+  </ng-container>
+</button>

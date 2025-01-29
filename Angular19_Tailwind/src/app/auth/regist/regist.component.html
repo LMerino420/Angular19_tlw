@@ -1,0 +1,63 @@
+<section class="bg-gray-50 min-h-screen flex items-center justify-center">
+  <!-- Regist container -->
+  <div class="bg-gray-200 rounded-2xl shadow-lg">
+    <!-- Contenedor -->
+    <div class="p-5">
+      <!-- titulo -->
+      <h2 class="font-bold text-2xl text-water">Registro</h2>
+      <p class="text-sm mt-4 mb-8">
+        Registrate en la prueba de applicacion con Angular-19
+      </p>
+      <!-- formulario -->
+      <form [formGroup]="registForm">
+        <!-- Input para nombre -->
+        <app-input
+          id="name"
+          label="Correo"
+          placeholder="Ingrese su nombre"
+          formControlName="frmName"
+          size="large"
+          additionalClasses="bg-transparent md:bg-water-50 mb-4"
+        />
+        <!-- Input para correo -->
+        <app-input
+          id="mail"
+          label="Correo"
+          placeholder="Ingrese su correo"
+          formControlName="frmMail"
+          size="large"
+          additionalClasses="bg-transparent md:bg-water-50 mb-4"
+        />
+        <!-- Input para clave -->
+        <app-input
+          id="pwd"
+          label="Clave"
+          placeholder="Ingrese su clave"
+          formControlName="frmPwd"
+          size="large"
+          additionalClasses="bg-transparent md:bg-water-50 mb-10"
+          [isPwd]="true"
+        />
+        <!-- Input para confirmar la clave -->
+        <app-input
+          id="pwdConf"
+          label="Confirmar clave"
+          placeholder="Confirme su clave"
+          formControlName="frmPwdConfirm"
+          size="large"
+          additionalClasses="bg-transparent md:bg-water-50 mb-10"
+          [isPwd]="true"
+        />
+        <!-- Boton para registrar -->
+        <app-button
+          color="water"
+          label="Registrar cuenta"
+          [additionalClasses]="'w-full'"
+          type="submit"
+          [disabled]="!registForm.valid"
+          size="large"
+        />
+      </form>
+    </div>
+  </div>
+</section>

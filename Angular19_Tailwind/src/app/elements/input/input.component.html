@@ -1,0 +1,46 @@
+<div>
+  <!-- Titulo del input -->
+  <label [for]="id" [ngClass]="getLabelClasses()">{{ label }}</label>
+  <!-- Input -->
+  <div class="relative">
+    <input
+      [type]="!isPwd ? type : !showPwd ? 'password' : 'text'"
+      [id]="id"
+      [name]="name"
+      [ngClass]="getInputClasses()"
+      [placeholder]="placeholder"
+      [required]="true"
+      [disabled]="disabled"
+      [(ngModel)]="value"
+      (ngModelChange)="onInput($event)"
+      (blur)="onTouch()"
+    />
+    <!-- Icono para input de contraseña -->
+    @if (isPwd) {
+    <div class="absolute inset-y-0 right-0 flex items-center">
+      <button
+        type="button"
+        class="flex p-1.5 mr-1.5 focus:outline-none"
+        (click)="togglePwdVisibility()"
+      >
+        <app-svg-icon
+          [path]="showPwd ? 'icons/visibility.svg' : 'icons/visibility-off.svg'"
+          additionalClasses="w-5 h-5 bg-water-950"
+        ></app-svg-icon>
+      </button>
+    </div>
+    }
+  </div>
+  <!-- Mensaje de error -->
+  <p
+    class="transition-all duration-200 ease-in-out"
+    [ngClass]="[
+      getErrorMessageClasses(),
+      hasError
+        ? 'opacity-100 translate-y-0'
+        : 'opacity-0 translate-y-[-10px] h-0'
+    ]"
+  >
+    {{ errorMessage }}
+  </p>
+</div>
