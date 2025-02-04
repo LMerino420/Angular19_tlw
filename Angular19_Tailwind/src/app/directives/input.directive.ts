@@ -80,6 +80,6 @@ export abstract class InputDirective implements ControlValueAccessor {
   }
 
   getErrorMessageClasses(): string {
-    return 'mt-1 text-sm text-red-600';
+    return 'mt-1 mb-3 text-sm text-red-600';
   }
 }

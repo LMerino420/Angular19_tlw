@@ -9,24 +9,28 @@
         Registrate en la prueba de applicacion con Angular-19
       </p>
       <!-- formulario -->
-      <form [formGroup]="registForm">
+      <form [formGroup]="registForm" (ngSubmit)="validRegist()">
         <!-- Input para nombre -->
         <app-input
-          id="name"
-          label="Correo"
+          id="frmName"
+          label="Nombre"
           placeholder="Ingrese su nombre"
           formControlName="frmName"
           size="large"
-          additionalClasses="bg-transparent md:bg-water-50 mb-4"
+          additionalClasses="bg-transparent md:bg-water-50 "
+          [hasError]="!!getErrorMessage('frmName')"
+          [errorMessage]="getErrorMessage('frmName')"
         />
         <!-- Input para correo -->
         <app-input
-          id="mail"
+          id="frmMail"
           label="Correo"
           placeholder="Ingrese su correo"
           formControlName="frmMail"
           size="large"
-          additionalClasses="bg-transparent md:bg-water-50 mb-4"
+          additionalClasses="bg-transparent md:bg-water-50 "
+          [hasError]="!!getErrorMessage('frmMail')"
+          [errorMessage]="getErrorMessage('frmMail')"
         />
         <!-- Input para clave -->
         <app-input
@@ -35,8 +39,10 @@
           placeholder="Ingrese su clave"
           formControlName="frmPwd"
           size="large"
-          additionalClasses="bg-transparent md:bg-water-50 mb-10"
+          additionalClasses="bg-transparent md:bg-water-50 "
           [isPwd]="true"
+          [hasError]="!!getErrorMessage('frmPwd')"
+          [errorMessage]="getErrorMessage('frmPwd')"
         />
         <!-- Input para confirmar la clave -->
         <app-input
@@ -45,14 +51,16 @@
           placeholder="Confirme su clave"
           formControlName="frmPwdConfirm"
           size="large"
-          additionalClasses="bg-transparent md:bg-water-50 mb-10"
+          additionalClasses="bg-transparent md:bg-water-50 "
           [isPwd]="true"
+          [hasError]="!!getErrorMessage('frmPwdConfirm')"
+          [errorMessage]="getErrorMessage('frmPwdConfirm')"
         />
         <!-- Boton para registrar -->
         <app-button
           color="water"
           label="Registrar cuenta"
-          [additionalClasses]="'w-full'"
+          [additionalClasses]="'w-full mt-8'"
           type="submit"
           [disabled]="!registForm.valid"
           size="large"
