@@ -9,31 +9,35 @@
         Ingresa a la prueba de applicacion con Angular-19
       </p>
       <!-- formulario -->
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
         <!-- Input para ingresar correo -->
         <app-input
-          id="usr"
+          id="frmMail"
           label="Correo"
           placeholder="Ingrese su correo"
           formControlName="frmMail"
           size="large"
-          additionalClasses="bg-transparent md:bg-water-50 mb-4"
+          additionalClasses="bg-transparent md:bg-water-50"
+          [hasError]="!!getErrorMessage('frmMail')"
+          [errorMessage]="getErrorMessage('frmMail')"
         />
         <!-- Input para ingresar clave -->
         <app-input
-          id="pwd"
+          id="frmPwd"
           label="Clave"
           placeholder="Ingrese su clave"
           formControlName="frmPwd"
           size="large"
-          additionalClasses="bg-transparent md:bg-water-50 mb-10"
+          additionalClasses="bg-transparent md:bg-water-50"
           [isPwd]="true"
+          [hasError]="!!getErrorMessage('frmPwd')"
+          [errorMessage]="getErrorMessage('frmPwd')"
         />
         <!-- Boton de ingresar -->
         <app-button
           color="water"
           label="Iniciar sesión"
-          [additionalClasses]="'w-full'"
+          [additionalClasses]="'w-full mt-8'"
           type="submit"
           [disabled]="!loginForm.valid"
           size="large"

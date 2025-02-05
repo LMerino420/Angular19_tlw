@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 import { environment } from '../../environments/environment';
 
@@ -15,10 +16,10 @@ import { environment } from '../../environments/environment';
 export class Commons {
   private _url = environment.API_URI;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toast: ToastrService) {}
 
   // ?--------------------------------------
-  // ?HTTP
+  // ?  HTTP
   // ?--------------------------------------
 
   //* Selector de request
@@ -49,19 +50,14 @@ export class Commons {
   handleError(error: HttpErrorResponse) {
     console.error('[HTTP Error]', error);
     if (error.status === 0) {
-      console.error(
-        'No se pudo establecer conexion con el servidor: ' + error.message
-      );
-      //   this.showAlert(
-      //     'No se pudo establecer conexion con el servidor: ' + error.message,
-      //     'ERROR'
-      //   );
+      const msg1 =
+        'No se pudo establecer conexion con el servidor: ' + error.message;
+      this.showAlert(msg1, 'ERROR');
     } else {
       if (error.error != undefined && error.error.object != undefined) {
-        console.error(
-          'Error con la respuesta del servidor: ' + error.error.object
-        );
-        // this.showAlert(error.error.object, 'Error!');
+        const msg2 =
+          'Error con la respuesta del servidor: ' + error.error.object;
+        this.showAlert(msg2, 'ERROR');
       }
     }
     return throwError(
@@ -87,16 +83,17 @@ export class Commons {
   }
 
   //* POST
-  postReq(endPoint: string, params: any, isAuth: boolean) {
+  postReq(endPoint: string, params: any, isAuth: boolean = false) {
     let header: any = '';
-    let headers: any = null;
+    let headers: any = '';
+    const _apiUrl = `${this._url}/${endPoint}`;
     if (isAuth) {
       const token = '';
       header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       headers = new HttpHeaders({ Authorization: header });
     }
 
-    return this.http.post(endPoint, params, headers).pipe(
+    return this.http.post(_apiUrl, params, headers).pipe(
       tap((rs) => {
         return rs;
       }),
@@ -106,5 +103,34 @@ export class Commons {
         return this.handleError(err);
       })
     );
+  }
+
+  // ?--------------------------------------
+  // ?  ALERTAS
+  // ?--------------------------------------
+
+  //* Selector de alertas
+  showAlert(msg: string, type: string) {
+    const config: {} = {
+      closeButton: true,
+      progressBar: true,
+      progressAnimation: 'decreasing',
+      timeOut: 5000,
+    };
+
+    switch (type) {
+      case 'INFO':
+        this.toast.info(msg, 'INFORMACIÓN!', config);
+        break;
+      case 'SUCCESS':
+        this.toast.success(msg, 'ÉXITO!', config);
+        break;
+      case 'WARNING':
+        this.toast.warning(msg, 'ALERTA!', config);
+        break;
+      case 'ERROR':
+        this.toast.error(msg, 'ERROR!', config);
+        break;
+    }
   }
 }

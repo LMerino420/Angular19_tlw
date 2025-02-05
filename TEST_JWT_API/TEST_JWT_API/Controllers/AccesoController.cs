@@ -66,9 +66,18 @@ namespace TEST_JWT_API.Controllers
 
             //Se valida el acceso
             if(userFound == null)
-                return StatusCode(StatusCodes.Status200OK, new {isSuccess = false,token = ""});
+                return StatusCode(StatusCodes.Status200OK, new {
+                    isSuccess = false,
+                    token = ""
+                });
             else
-                return StatusCode(StatusCodes.Status200OK, new { isSuccess = true, token = _utilidades.GenerarJWT(userFound) });
+                return StatusCode(StatusCodes.Status200OK, new { 
+                    isSuccess = true, 
+                    id = userFound.IdUser, 
+                    nombre = userFound.Nombre, 
+                    correo=userFound.Correo, 
+                    token = _utilidades.GenerarJWT(userFound), 
+                });
         }
     }
 }
